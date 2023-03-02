@@ -15,4 +15,5 @@
     <color name="red">#FF0000</color>
     <color name="oldblueish">#1FB3E5</color>
     <color name="whiteTransparency">#FFFFFF</color>
+    <color name="gray">#F1F1F1</color>
 </resources>

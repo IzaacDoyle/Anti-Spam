@@ -50,7 +50,7 @@ class Home : AppCompatActivity() {
 
 
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home,
+            R.id.nav_checkNumber,
             R.id.nav_call_blacklist,
             R.id.nav_sms_blacklist,
             R.id.nav_community_blocking,

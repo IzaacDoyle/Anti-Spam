@@ -10,7 +10,7 @@
             <menu>
                 <group android:checkableBehavior="all">
                     <item
-                        android:id="@+id/nav_home"
+                        android:id="@+id/nav_checkNumber"
                         android:icon="@drawable/ic_check"
                         android:title="Check Number" />
         <item
