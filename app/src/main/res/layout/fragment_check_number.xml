@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".numbercheck.CheckNumber"
+    tools:context=".ui.numbercheck.CheckNumber"
     android:background="@color/gray"
     android:orientation="vertical">
 
@@ -33,6 +33,7 @@
             />
 
         <TextView
+            android:id="@+id/response_number_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -79,6 +80,7 @@
             />
 
         <TextView
+            android:id="@+id/country_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -87,6 +89,7 @@
             android:textStyle="bold"
             android:textSize="23dp"
             android:text="-"
+            android:maxLength="10"
             android:layout_marginTop="10dp"
             />
 
@@ -108,6 +111,7 @@
             />
 
         <TextView
+            android:id="@+id/risk_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -138,6 +142,7 @@
             />
 
         <TextView
+            android:id="@+id/ctiques_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -179,22 +184,38 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="18dp"
-        android:layout_gravity="center"
-        android:text="@string/search"
-        android:textSize="16dp"
-        />
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        >
+
+        <Button
+            android:id="@+id/callog"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:text="@string/call_log"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/search"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:text="@string/search"
+            android:textSize="16dp"
+            android:layout_marginStart="25dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <Button
-        android:layout_width="200dp"
+        android:id="@+id/view_report"
+        android:layout_width="280dp"
         android:layout_height="60dp"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="center"
-        android:text="@string/call_log"
+        android:layout_marginTop="5dp"
+        android:text="@string/view_community_report"
         android:textSize="16dp"
-        />
+        android:layout_gravity="center" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

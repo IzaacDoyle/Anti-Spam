@@ -208,6 +208,32 @@ object FirebaseDBManager : CommunityDBInterface, FirestoreDBInterface {
             }
     }
 
+    override fun getDocumentByNumber(phoneNumber: String, callback: (LocalBlockModel?) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val blocklistRef = db.collection("blocklist")
+        val query: Query = blocklistRef.whereEqualTo(FieldPath.documentId(), phoneNumber)
+
+
+        query.get().addOnSuccessListener { querySnapshot ->
+            if (!querySnapshot.isEmpty) {
+                val documentSnapshot = querySnapshot.documents[0]
+
+                val number = documentSnapshot.id
+
+                val country = documentSnapshot.getString("country")!!
+                val risk = documentSnapshot.getString("risk")!!
+                val user_reports = documentSnapshot.getString("user_reports")!!.split(" ")[0]
+
+
+                val localBlockModel = LocalBlockModel(number,risk,country,user_reports)
+
+                callback(localBlockModel)
+            } else {
+                callback(null)
+            }
+        }
+    }
+
 
     override fun getBlockList(callback: (blocklist : MutableList<LocalBlockModel>) -> Unit) {
         val db = FirebaseFirestore.getInstance()

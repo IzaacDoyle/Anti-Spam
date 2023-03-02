@@ -108,6 +108,7 @@
     <string name="settings_download_blacklist_description">Downloads blacklists from cloud. (When internet connection is down)</string>
     <string name="search">search</string>
     <string name="call_log">call log</string>
+    <string name="view_community_report">View Community Report</string>
 
     <string-array name="warning">
         <item>High</item>
