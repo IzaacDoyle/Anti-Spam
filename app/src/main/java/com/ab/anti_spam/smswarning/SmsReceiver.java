@@ -28,12 +28,8 @@ public class SmsReceiver extends BroadcastReceiver {
 
                 UIDsave uidSave = UIDsave.INSTANCE;
                 String latestUID = uidSave.getUidFromFile(context);
-                SettingsModel settings = null;
-                if (latestUID != null) {
-                    settings = getSettings(latestUID, context);
-                }
 
-                assert settings != null;
+                SettingsModel settings = getSettings(latestUID, context);
                 if (settings.getScan_sms()) {
 
 
@@ -61,15 +57,12 @@ public class SmsReceiver extends BroadcastReceiver {
                             SmsMessage[] smsMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent);
                             for (SmsMessage message : smsMessages) {
 
-                                    NaiveClassifier naive = new NaiveClassifier();
-                                    boolean isScam = naive.isFraudulent(context, message.getMessageBody());
-
                                 //Using the Naive Bayes Classification to detect if message is fraudulent.
-                                if (isScam && message.getMessageBody().length() > 20) {
-                                    Intent overlayintent = new Intent(context, overlayservice.class);
-                                    overlayintent.putExtra("msg_from", message.getDisplayOriginatingAddress());
-                                    context.startService(new Intent(overlayintent));
-                                    System.out.println(message.getMessageBody());
+                                if (message.getMessageBody().length() > 20) {
+                                    Intent overlayintentNaive = new Intent(context,overlayservice.class);
+                                    String pass = message.getMessageBody() + "@@@@" + message.getDisplayOriginatingAddress();
+                                    overlayintentNaive.putExtra("naiveFrom",pass);
+                                    context.startService(new Intent(overlayintentNaive));
                                 }
                                 //if not a scam then check the manual blacklists.
                                 else {
@@ -85,7 +78,7 @@ public class SmsReceiver extends BroadcastReceiver {
                                                 Intent overlayintent = new Intent(context, overlayservice.class);
                                                 overlayintent.putExtra("msg_from", message.getDisplayOriginatingAddress());
                                                 context.startService(new Intent(overlayintent));
-
+                                                break;
                                             }
                                         }
                                         //Regexes
@@ -95,6 +88,7 @@ public class SmsReceiver extends BroadcastReceiver {
                                                 Intent overlayintent = new Intent(context, overlayservice.class);
                                                 overlayintent.putExtra("msg_from", message.getOriginatingAddress());
                                                 context.startService(new Intent(overlayintent));
+                                                break;
                                             }
                                         }
                                     }

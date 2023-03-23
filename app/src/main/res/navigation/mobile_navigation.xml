@@ -285,5 +285,9 @@
         android:id="@+id/nav_checkNumber"
         android:name="com.ab.anti_spam.ui.numbercheck.CheckNumber"
         android:label="Check Number"
-        tools:layout="@layout/fragment_check_number" />
+        tools:layout="@layout/fragment_check_number" >
+        <action
+            android:id="@+id/action_nav_checkNumber_to_communityViewReport"
+            app:destination="@id/communityViewReport" />
+    </fragment>
 </navigation>

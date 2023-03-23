@@ -18,6 +18,7 @@ import com.ab.anti_spam.R
 import com.ab.anti_spam.databinding.FragmentAddCommentDialogBinding
 import com.ab.anti_spam.databinding.FragmentAddUserReportDialogBinding
 import com.ab.anti_spam.firebase.genUID
+import com.ab.anti_spam.helpers.UIDsave
 import com.ab.anti_spam.models.ChooseNumberModel
 import com.ab.anti_spam.models.CommunityBlockingCommentsModel
 import com.ab.anti_spam.models.CommunityBlockingModel
@@ -98,7 +99,7 @@ class AddCommentDialog : DialogFragment() {
 
                 val reportID = communityModel.id.toString()
                 val reportUID = communityModel.user_Id
-                val currentUID = communityViewModel.UID.value!!
+                val currentUID = UIDsave.getUidFromFile(requireActivity().applicationContext).toString()
 
                 val addSizeToID = communityModel.user_comments.size
                 val comment = CommunityBlockingCommentsModel(genUID()+addSizeToID,currentUID,description,warning,date)

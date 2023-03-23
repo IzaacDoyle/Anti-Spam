@@ -76,6 +76,8 @@ class Home : AppCompatActivity() {
                         if(i.uid.equals(currentUser.uid)){
                             if(i.theme == false){
                                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                            }else{
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                             }
                         }
                     }

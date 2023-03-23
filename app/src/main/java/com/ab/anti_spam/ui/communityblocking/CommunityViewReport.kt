@@ -22,6 +22,7 @@ import com.ab.anti_spam.R
 import com.ab.anti_spam.adapters.*
 import com.ab.anti_spam.databinding.FragmentCommunityUserReportViewPagerBinding
 import com.ab.anti_spam.databinding.FragmentCommunityViewReportBinding
+import com.ab.anti_spam.helpers.UIDsave
 import com.ab.anti_spam.main.Main
 import com.ab.anti_spam.models.ChooseNumberModel
 import com.ab.anti_spam.models.CommunityBlockingCommentsModel
@@ -58,7 +59,6 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
         if (model != null) {
             this.model = model
         }
-
     }
 
     override fun onCreateView(
@@ -72,7 +72,6 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
         pieHeight = fragBinding.pieChart.layoutParams.height
 
         setupMenu()
-
         renderRecyclerView()
 
 
@@ -94,6 +93,12 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
                 this.model.user_comments as ArrayList<CommunityBlockingCommentsModel>,
                 this,this,currentUID
             )
+        }else{
+            //Repeat whats above from get UID from file.
+            val currentUIDFromFile = UIDsave.getUidFromFile(app.applicationContext)
+            fragBinding.commentRecyclerview.adapter = CommunityUserReportCommentsAdapter(
+                this.model.user_comments as ArrayList<CommunityBlockingCommentsModel>,
+                this,this,currentUIDFromFile!!)
         }
         adapter = fragBinding.commentRecyclerview.adapter as CommunityUserReportCommentsAdapter
     }
@@ -105,15 +110,13 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
                 if (it != null) {
                     if (it.user_comments.size > 0) {
                         this.model = it
-                        val currentUID = communityViewModel.UID.value
-
-                        if(currentUID != null) {
+                        val currentUID = UIDsave.getUidFromFile(requireActivity().applicationContext).toString()
                             fragBinding.commentRecyclerview.layoutManager =
                                 LinearLayoutManager(activity)
                             fragBinding.commentRecyclerview.adapter =
                                 CommunityUserReportCommentsAdapter(
                                     it.user_comments as ArrayList<CommunityBlockingCommentsModel>, this,this, currentUID)
-                        }
+
 
                         adapter = fragBinding.commentRecyclerview.adapter as CommunityUserReportCommentsAdapter
                         setupPieChart(it)
@@ -386,8 +389,10 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
     }
 
     fun checkCommentedAlready() : Boolean{
-        val currentUID : String? = communityViewModel.UID.value
-
+        var currentUID : String? = communityViewModel.UID.value
+        if(currentUID == null){
+            currentUID = UIDsave.getUidFromFile(app.applicationContext)
+        }
         for(i in model.user_comments){
             if(currentUID!!.trim().equals(i.user_Id_comment.toString().trim())){
                 return true
@@ -405,9 +410,15 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
         //findNavController().navigate(R.id.action_communityViewReport_to_viewCommentDialog,bundle)
     }
 
+    fun updateAfterDelete(model: CommunityBlockingCommentsModel){
+        this.model.user_comments.remove(model)
+        setupPieChart(this.model)
+    }
+
     override fun onDeleteClick(model: CommunityBlockingCommentsModel) {
         communityViewModel.deleteComment(model,this.model.user_Id,this.model.id.toString())
         adapter.removeItem(model)
+        updateAfterDelete(model)
     }
 
 

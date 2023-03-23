@@ -109,6 +109,7 @@
     <string name="search">search</string>
     <string name="call_log">call log</string>
     <string name="view_community_report">View Community Report</string>
+    <string name="select_number">Select Number</string>
 
     <string-array name="warning">
         <item>High</item>

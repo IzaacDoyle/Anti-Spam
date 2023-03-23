@@ -38,9 +38,11 @@ class Screeningservice: CallScreeningService() {
                 }
             }
             if(phoneNumber.isNotEmpty()) {
+                //Manual blocking
                 if (settings.personal_block == true) {
                     personalBlacklistBlocking(response, phoneNumber, callDetails)
                 }
+                //Local firestore blocking (Downloaded from Firstore Database)
                 if (settings.local_store_block == true) {
                     localDBlocking(response, phoneNumber, callDetails)
                 }
