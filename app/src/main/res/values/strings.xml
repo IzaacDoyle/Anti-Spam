@@ -110,11 +110,23 @@
     <string name="call_log">call log</string>
     <string name="view_community_report">View Community Report</string>
     <string name="select_number">Select Number</string>
+    <string name="your_email">Your Email</string>
+    <string name="subject">Subject</string>
+    <string name="your_name">Your Name</string>
+    <string name="detailed_description">Detailed Description</string>
+    <string name="contact">Contact</string>
 
     <string-array name="warning">
         <item>High</item>
         <item>Medium</item>
         <item>Low</item>
+    </string-array>
+
+    <string-array name="subjects">
+        <item>General</item>
+        <item>Question</item>
+        <item>Issue</item>
+
     </string-array>
 
     <string-array name="countries">

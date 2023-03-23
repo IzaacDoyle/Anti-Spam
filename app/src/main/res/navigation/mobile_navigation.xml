@@ -290,4 +290,9 @@
             android:id="@+id/action_nav_checkNumber_to_communityViewReport"
             app:destination="@id/communityViewReport" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_contactus"
+        android:name="com.ab.anti_spam.ui.contactus.ContactUs"
+        android:label="Contact"
+        tools:layout="@layout/fragment_contact_us" />
 </navigation>

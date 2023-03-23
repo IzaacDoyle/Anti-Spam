@@ -38,9 +38,9 @@
         <menu>
             <group android:checkableBehavior="all">
             <item
-                android:id="@+id/nav_learnscampatterns"
-                android:icon="@drawable/ic_spamlearn"
-                android:title="@string/learn_scam" />
+                android:id="@+id/nav_contactus"
+                android:icon="@drawable/ic_contact"
+                android:title="@string/contact" />
 
 
             </group>
