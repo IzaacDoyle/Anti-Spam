@@ -15,6 +15,7 @@ import com.ab.anti_spam.databinding.FragmentContactUsBinding
 import com.ab.anti_spam.email.sendEmail
 import com.ab.anti_spam.main.Main
 import com.ab.anti_spam.ui.callblacklist.CallblacklistViewModel
+import com.ab.anti_spam.ui.callblacklist.OptionsDialog
 
 class ContactUs : Fragment() {
     lateinit var app: Main
@@ -65,16 +66,35 @@ class ContactUs : Fragment() {
         val descriptionLayout = fragBinding.textInputLayoutDescription
         val descriptionText = fragBinding.titleDescription.text.toString()
 
+        var gate = 0
+
         //validation
-        if(subjectText.isEmpty() || emailText.isEmpty() || nameText.isEmpty() || descriptionText.isEmpty() || emailText.length < 5 || nameText.length < 5 || descriptionText.length < 20){
+        if(subjectText.isEmpty()){
             subjectLayout.setBoxStrokeColorStateList(colorStateList)
+        }else{
+            gate++
+        }
+        if (emailText.isEmpty() || emailText.length < 5){
             emailLayout.setBoxStrokeColorStateList(colorStateList)
+        }else{
+            gate++
+        }
+        if (nameText.isEmpty() || nameText.length < 5){
             nameLayout.setBoxStrokeColorStateList(colorStateList)
+        }else{
+            gate++
+        }
+        if(descriptionText.isEmpty() || descriptionText.length < 20){
             descriptionLayout.setBoxStrokeColorStateList(colorStateList)
         }else{
+            gate++
+        }
+
+        if(gate == 4){
             sendEmail(subjectText,emailText,nameText,descriptionText,resources.getString(R.string.pss)) {sent ->
                 if(sent==true){
-                    println("sent")
+                    val sentDialog = QuerySentDialog()
+                    sentDialog.show(parentFragmentManager,null)
                 }
             }
         }

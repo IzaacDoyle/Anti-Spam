@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:hint="@string/subject"
-        app:startIconDrawable="@drawable/ic_search"
+        app:startIconDrawable="@drawable/ic_question"
         >
 
         <AutoCompleteTextView
@@ -98,9 +98,9 @@
         android:id="@+id/submit"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="50dp"
-        android:layout_width="350dp"
+        android:layout_width="300dp"
         android:layout_height="65dp"
-        android:text="Submit"
+        android:text="@string/submit"
         />
 
 

@@ -116,6 +116,9 @@
     <string name="detailed_description">Detailed Description</string>
     <string name="contact">Contact</string>
     <string name="pss">anV2eHR1Z3Vzb3F5a3Vic</string>
+    <string name="return_home">Return home</string>
+    <string name="thank_you_your_message_has_been_sent">Thank you!\nMessage has been sent.</string>
+    <string name="submit">Submit</string>
     <string-array name="warning">
         <item>High</item>
         <item>Medium</item>
