@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:id="@+id/textInputLayoutSubject"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:hint="@string/subject"
@@ -34,7 +34,7 @@
         android:layout_gravity="center"
         android:id="@+id/textInputLayoutEmail"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:hint="@string/your_email"
@@ -56,7 +56,7 @@
         android:layout_gravity="center"
         android:id="@+id/textInputLayoutName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:hint="@string/your_name"
@@ -76,7 +76,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutDescription"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="350dp"
+        android:layout_width="320dp"
         android:layout_height="140dp"
         android:layout_marginTop="40dp"
         android:hint="@string/detailed_description"
@@ -89,7 +89,7 @@
             android:layout_height="match_parent"
             android:lines="100"
             android:inputType="textMultiLine"
-            android:maxLength="500"
+            android:maxLength="10000"
             />
     </com.google.android.material.textfield.TextInputLayout>
 

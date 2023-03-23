@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import com.ab.anti_spam.R
 import com.ab.anti_spam.databinding.FragmentCallblacklistBinding
 import com.ab.anti_spam.databinding.FragmentContactUsBinding
+import com.ab.anti_spam.email.sendEmail
 import com.ab.anti_spam.main.Main
 import com.ab.anti_spam.ui.callblacklist.CallblacklistViewModel
 
@@ -71,7 +72,11 @@ class ContactUs : Fragment() {
             nameLayout.setBoxStrokeColorStateList(colorStateList)
             descriptionLayout.setBoxStrokeColorStateList(colorStateList)
         }else{
-
+            sendEmail(subjectText,emailText,nameText,descriptionText,resources.getString(R.string.pss)) {sent ->
+                if(sent==true){
+                    println("sent")
+                }
+            }
         }
     }
 
