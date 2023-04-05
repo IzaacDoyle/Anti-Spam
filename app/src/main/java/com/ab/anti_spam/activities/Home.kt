@@ -116,6 +116,9 @@ class Home : AppCompatActivity() {
         if(!currentUser.isAnonymous && !currentUser.isEmailVerified){
             navHeaderBinding.username.setText(currentUser.phoneNumber)
         }
+        if (!currentUser.isEmailVerified && !currentUser.isAnonymous && currentUser.phoneNumber.toString().isEmpty()){
+            navHeaderBinding.username.text = currentUser.email
+        }
     }
 
     fun signOut(navView: NavigationView){

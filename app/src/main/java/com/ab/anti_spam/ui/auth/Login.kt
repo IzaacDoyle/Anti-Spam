@@ -4,13 +4,17 @@ import android.Manifest
 import android.app.Activity
 import android.app.role.RoleManager
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ab.anti_spam.databinding.LoginBinding
@@ -21,6 +25,10 @@ import pub.devrel.easypermissions.EasyPermissions
 
 class Login: AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     val perms = arrayOf(Manifest.permission.RECEIVE_SMS,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.READ_CALL_LOG)
+    val smsPermissions = arrayOf(Manifest.permission.RECEIVE_SMS)
+    val windowPermissions = arrayOf(Manifest.permission.SYSTEM_ALERT_WINDOW)
+    val callLogPermissions = arrayOf(Manifest.permission.READ_CALL_LOG)
+
     private lateinit var loginViewModel : LoginViewModel
     private lateinit var loginBinding: LoginBinding
     private lateinit var loggedInViewModel : LoggedInViewModel
@@ -31,6 +39,7 @@ class Login: AppCompatActivity(), EasyPermissions.PermissionCallbacks {
 
         loginBinding = LoginBinding.inflate(layoutInflater)
         setContentView(loginBinding.root)
+
     }
 
     public override fun onStart() {
@@ -77,8 +86,6 @@ class Login: AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         //Give the user an option to choose permissions
         if(EasyPermissions.somePermissionPermanentlyDenied(this,perms)){
             //AppSettingsDialog.Builder(this).build().show()
-
-        }else{
             requestPermissions()
         }
     }
@@ -116,8 +123,9 @@ class Login: AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         //if result code from
         if (result.resultCode == Activity.RESULT_OK) {
             if(Settings.canDrawOverlays(this)){
-                loginViewModel.login()
-                this.finish()
+                    Thread.sleep(1500)
+                    loginViewModel.login()
+                    this.finish()
             }else{
                 openOverlayActivityForResult()
             }
