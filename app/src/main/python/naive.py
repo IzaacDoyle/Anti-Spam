@@ -78,8 +78,7 @@ test_set = data_randomized[training_test_index:].reset_index(drop=True)
 training_dataset.head(3)
 
 # After cleaning
-training_dataset['SMS'] = training_dataset['SMS'].str.replace(
-   '\W', ' ',regex=True) # Removes punctuation
+training_dataset['SMS'] = training_dataset['SMS'].str.replace('\W', ' ',regex=True) # Removes punctuation
 training_dataset['SMS'] = training_dataset['SMS'].str.lower()
 training_dataset['SMS'] = training_dataset['SMS'].str.split()
 

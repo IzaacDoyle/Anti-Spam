@@ -11,6 +11,7 @@
         android:required="true" />
 
     <application
+        android:largeHeap="true"
         android:usesCleartextTraffic="true"
         android:name=".main.Main"
         android:allowBackup="true"

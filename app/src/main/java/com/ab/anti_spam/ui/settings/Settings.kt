@@ -42,7 +42,6 @@ class Settings : Fragment() {
         loadFireUser()
         _fragBinding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root = fragBinding.root
-
         settingListeners()
         disableUntilLoaded()
         return root

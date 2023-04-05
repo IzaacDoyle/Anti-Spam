@@ -58,11 +58,16 @@ public class SmsReceiver extends BroadcastReceiver {
                             for (SmsMessage message : smsMessages) {
 
                                 //Using the Naive Bayes Classification to detect if message is fraudulent.
-                                if (message.getMessageBody().length() > 20) {
-                                    Intent overlayintentNaive = new Intent(context,overlayservice.class);
-                                    String pass = message.getMessageBody() + "@@@@" + message.getDisplayOriginatingAddress();
-                                    overlayintentNaive.putExtra("naiveFrom",pass);
-                                    context.startService(new Intent(overlayintentNaive));
+                                if (message.getMessageBody().length() > 10) {
+                                    Boolean result = BayesNaiveClassifier.INSTANCE.isSpamClassify(message.getMessageBody(),context);
+                                    if(result){
+                                        System.out.println("Naive Model detected as scam, displaying overlay...");
+                                        Intent overlayintent = new Intent(context, overlayservice.class);
+                                        overlayintent.putExtra("msg_from", message.getDisplayOriginatingAddress());
+                                        context.startService(new Intent(overlayintent));
+                                    }else{
+                                        System.out.println("Naive Model detect as legit");
+                                    }
                                 }
                                 //if not a scam then check the manual blacklists.
                                 else {

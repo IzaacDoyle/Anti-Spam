@@ -18,7 +18,6 @@ import com.ab.anti_spam.adapters.deleteListener
 import com.ab.anti_spam.databinding.FragmentCallblacklistBinding
 import com.ab.anti_spam.main.Main
 import com.ab.anti_spam.models.CallBlacklistModel
-import com.ab.anti_spam.smswarning.NaiveClassifier
 import com.google.android.material.tabs.TabLayout
 
 
