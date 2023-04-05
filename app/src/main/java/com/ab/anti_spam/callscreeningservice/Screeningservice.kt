@@ -159,9 +159,11 @@ class Screeningservice: CallScreeningService() {
         if(regexBlockArray.size > 0){
             val cleanArray = cleanRegex(regexBlockArray)
             for(i in cleanArray){
-                if(phoneNumber.matches(i.toRegex())){
-                    blockNumber(response,phoneNumber,callDetails)
-                }
+                try {
+                    if (phoneNumber.matches(i.toRegex())) {
+                        blockNumber(response, phoneNumber, callDetails)
+                    }
+                }catch (e: Exception){println("Error in regex")}
             }
         }
     }

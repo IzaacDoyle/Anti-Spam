@@ -45,33 +45,13 @@ class Smsblacklist : Fragment() {
             val optionsDialog = SMSOptionsDialog()
             optionsDialog.show(parentFragmentManager,null)
         }
-
-        emptyStorageLayout()
-        observer()
         tabLayoutSetup()
 
         return root
     }
 
 
-    private fun observer(){
-        blacklistViewModel.refresh(app)
-        blacklistViewModel.observableBlacklist.observe(viewLifecycleOwner, Observer { blacklist ->
-            blacklist?.let {
-                emptyStorageLayout()
-            }
-        })
-    }
 
-    private fun emptyStorageLayout(){
-        if(app.localSMSBlacklist.getAll().size > 0){
-            fragBinding.blockIcon.isVisible = false
-            fragBinding.blockText.isVisible = false
-        }else{
-            fragBinding.blockIcon.isVisible = true
-            fragBinding.blockText.isVisible = true
-        }
-    }
 
     private fun tabLayoutSetup(){
         tabLayout.removeAllTabs()

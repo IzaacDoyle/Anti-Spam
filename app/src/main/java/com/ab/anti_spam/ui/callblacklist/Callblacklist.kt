@@ -29,11 +29,9 @@ class Callblacklist : Fragment(),deleteListener {
 
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = activity?.application as Main
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -49,20 +47,10 @@ class Callblacklist : Fragment(),deleteListener {
         }
 
         setupMenu()
-        emptyStorageLayout()
-        observer()
         tabLayoutSetup()
         return root
     }
 
-    private fun observer(){
-        blacklistViewModel.refresh(app)
-        blacklistViewModel.observableBlacklist.observe(viewLifecycleOwner, Observer { blacklist ->
-            blacklist?.let {
-                emptyStorageLayout()
-            }
-        })
-    }
 
 
     private fun tabLayoutSetup(){
@@ -77,7 +65,7 @@ class Callblacklist : Fragment(),deleteListener {
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 viewPager.currentItem = tab!!.position
-
+                blacklistViewModel.refresh(app)
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
@@ -85,15 +73,6 @@ class Callblacklist : Fragment(),deleteListener {
         })
     }
 
-    private fun emptyStorageLayout(){
-        if(app.localCallBlacklist.getAll().size > 0){
-            fragBinding.blockIcon.isVisible = false
-            fragBinding.blockText.isVisible = false
-        }else{
-            fragBinding.blockIcon.isVisible = true
-            fragBinding.blockText.isVisible = true
-        }
-    }
 
 
     override fun onDestroyView() {

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,10 +37,35 @@ class SMSKeywordBlockViewPager : Fragment(),deleteListenerSMS {
         _fragBinding = FragmentSMSKeywordBlockViewPagerBinding.inflate(inflater, container, false)
         val root = fragBinding.root
 
-
+        emptyStorageLayout()
+        observer()
         loadBlacklist()
 
         return root
+    }
+
+
+
+    private fun observer(){
+        blacklistViewModel.refresh(app)
+        blacklistViewModel.observableBlacklist.observe(viewLifecycleOwner, Observer { blacklist ->
+            blacklist?.let {
+                emptyStorageLayout()
+            }
+        })
+    }
+
+    private fun emptyStorageLayout(){
+        val blacklist = app.localSMSBlacklist.getAll()
+        val anyCountryIsEmpty = blacklist.any { it.by_keyword.isNotEmpty() }
+
+        if(anyCountryIsEmpty){
+            fragBinding.blockIcon.isVisible = false
+            fragBinding.blockText.isVisible = false
+        }else{
+            fragBinding.blockIcon.isVisible = true
+            fragBinding.blockText.isVisible = true
+        }
     }
 
     private fun loadBlacklist(){

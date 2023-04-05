@@ -45,12 +45,35 @@ class CountryBlockViewPager : Fragment(),deleteListener {
         _fragBinding = FragmentCountryBlockViewPagerBinding.inflate(inflater, container, false)
         val root = fragBinding.root
 
-
+        emptyStorageLayout()
         loadBlacklist()
-
+        observer()
         return root
     }
 
+
+    private fun observer(){
+        blacklistViewModel.refresh(app)
+        blacklistViewModel.observableBlacklist.observe(viewLifecycleOwner, Observer { blacklist ->
+            blacklist?.let {
+                emptyStorageLayout()
+            }
+        })
+    }
+
+
+    private fun emptyStorageLayout(){
+        val blacklist = app.localCallBlacklist.getAll()
+        val anyCountryIsEmpty = blacklist.any { it.by_country.isNotEmpty() }
+
+        if(anyCountryIsEmpty){
+            fragBinding.blockIcon.isVisible = false
+            fragBinding.blockText.isVisible = false
+        }else{
+            fragBinding.blockIcon.isVisible = true
+            fragBinding.blockText.isVisible = true
+        }
+    }
 
     private fun loadBlacklist(){
         fragBinding.callblacklistRecyclerview.adapter?.notifyDataSetChanged()
