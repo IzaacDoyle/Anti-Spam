@@ -119,6 +119,7 @@
     <string name="return_home">Return home</string>
     <string name="thank_you_your_message_has_been_sent">Thank you!\nMessage has been sent.</string>
     <string name="submit">Submit</string>
+    <string name="select_regex">Select Regex</string>
     <string-array name="warning">
         <item>High</item>
         <item>Medium</item>
@@ -130,6 +131,17 @@
         <item>Question</item>
         <item>Issue</item>
 
+    </string-array>
+
+    <string-array name="regexes">
+        <item>Number Starts With</item>
+        <item>Number Ends With</item>
+        <item>Number Contains</item>
+    </string-array>
+    <string-array name="regexes2">
+        <item>Word Starts With</item>
+        <item>Word Ends With</item>
+        <item>Word Contains</item>
     </string-array>
 
     <string-array name="countries">

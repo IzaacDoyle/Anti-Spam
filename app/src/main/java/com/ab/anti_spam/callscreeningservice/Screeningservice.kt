@@ -160,10 +160,29 @@ class Screeningservice: CallScreeningService() {
             val cleanArray = cleanRegex(regexBlockArray)
             for(i in cleanArray){
                 try {
+                    if(i.contains("Starts With")){
+                        val rex = i.replace("Number Starts With : ","").trim()
+                        if (phoneNumber.replace("+","").startsWith(rex)){
+                            blockNumber(response, phoneNumber, callDetails)
+                        }
+                    }
+                    if (i.contains("Ends With")){
+                        val rex = i.replace("Number Ends With : ","").trim()
+                        if (phoneNumber.replace("+","").endsWith(rex)){
+                            blockNumber(response, phoneNumber, callDetails)
+                        }
+                    }
+                    if (i.contains("Contains")){
+                        val rex = i.replace("Number Contains : ","").trim()
+                        if (phoneNumber.replace("+","").contains(rex)){
+                            blockNumber(response, phoneNumber, callDetails)
+                        }
+                    }
+
                     if (phoneNumber.matches(i.toRegex())) {
                         blockNumber(response, phoneNumber, callDetails)
                     }
-                }catch (e: Exception){println("Error in regex")}
+                }catch (e: Exception){println("Error in regex ${e}")}
             }
         }
     }

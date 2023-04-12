@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -35,6 +36,9 @@ class RegexBlockDialog: DialogFragment() {
         _fragBinding = CallblacklistRegexblockDialogBinding.inflate(inflater, container, false)
         val root = fragBinding.root
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val adapter = ArrayAdapter(requireContext(),R.layout.list_countries,resources.getStringArray(R.array.regexes))
+        fragBinding.regexSelect.setAdapter(adapter)
+
 
         fragBinding.BlockByRegex.setOnClickListener{
             addBlock()
@@ -47,12 +51,16 @@ class RegexBlockDialog: DialogFragment() {
 
     private fun addBlock(){
         if(!fragBinding.textInputLayout.editText?.text.toString().isEmpty()) {
-            val data = fragBinding.textInputLayout.editText?.text.toString()
-            val model = CallBlacklistModel()
-            model.by_regex = data
-            blacklistViewModel.addBlacklist(model, app)
-            dismiss()
-            fragBinding.BlockByRegex.isEnabled = false
+            val regex = fragBinding.textInputLayout2.editText?.text.toString()
+            val number = fragBinding.textInputLayout.editText?.text.toString()
+            if (regex.isNotEmpty() || number.isNotEmpty()) {
+                val data = regex + " : " + number
+                val model = CallBlacklistModel()
+                model.by_regex = data
+                blacklistViewModel.addBlacklist(model, app)
+                dismiss()
+                fragBinding.BlockByRegex.isEnabled = false
+            }
         }
     }
 

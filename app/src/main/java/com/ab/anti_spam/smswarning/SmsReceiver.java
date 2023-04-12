@@ -70,7 +70,7 @@ public class SmsReceiver extends BroadcastReceiver {
                                     }
                                 }
                                 //if not a scam then check the manual blacklists.
-                                else {
+
                                     //Chopping received SMS message for analysis.
                                     String[] choppedMessage = message.getMessageBody().split(" ");
                                     for (int i = 0; i < choppedMessage.length; i++) {
@@ -88,17 +88,37 @@ public class SmsReceiver extends BroadcastReceiver {
                                         }
                                         //Regexes
                                         for (int iii = 0; iii < regexes.size(); iii++) {
-                                            if (regexes.get(iii).matches(comparison)) {
-                                                //Trigger warning
-                                                Intent overlayintent = new Intent(context, overlayservice.class);
-                                                overlayintent.putExtra("msg_from", message.getOriginatingAddress());
-                                                context.startService(new Intent(overlayintent));
-                                                break;
+                                            String rex = regexes.get(iii).toString().toLowerCase();
+                                            if(rex.contains("Starts With")){
+                                                String rex2 = rex.replace("Word Starts With : ","").trim();
+                                                if(comparison.startsWith(rex2)){
+                                                    Intent overlayintent = new Intent(context, overlayservice.class);
+                                                    overlayintent.putExtra("msg_from", message.getOriginatingAddress());
+                                                    context.startService(new Intent(overlayintent));
+                                                    break;
+                                                }
+                                            }
+                                            if(rex.contains("Ends With")){
+                                                String rex2 = rex.replace("Word Ends With : ","").trim();
+                                                if(comparison.endsWith(rex2)){
+                                                    Intent overlayintent = new Intent(context, overlayservice.class);
+                                                    overlayintent.putExtra("msg_from", message.getOriginatingAddress());
+                                                    context.startService(new Intent(overlayintent));
+                                                    break;
+                                                }
+                                            }
+                                            if(rex.contains("Contains")){
+                                                String rex2 = rex.replace("Word Contains With : ","").trim();
+                                                if(comparison.contains(rex2)){
+                                                    Intent overlayintent = new Intent(context, overlayservice.class);
+                                                    overlayintent.putExtra("msg_from", message.getOriginatingAddress());
+                                                    context.startService(new Intent(overlayintent));
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
                         }
                     } catch (Exception e) {
                         System.out.println(e);
