@@ -257,7 +257,7 @@
             android:layout_toStartOf="@+id/toggle_unknown_blocking"
             android:layout_marginStart="12dp"
             android:layout_marginTop="5dp"
-            android:text="@string/settings_block_unknown_numbers_description"
+            android:text="@string/blocks_incoming_numbers_that_are_not_visible_or_unknown"
             android:textSize="15dp" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial

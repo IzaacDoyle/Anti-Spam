@@ -74,7 +74,11 @@ class Settings : Fragment() {
     fun enable(){
         fragBinding.toggleSmsScan.isEnabled = true
         fragBinding.toggleDbBlocking.isEnabled = true
-        fragBinding.toggleLocalBlocking.isEnabled = true
+        if(localStorage.checkIfExists() == false) {
+            fragBinding.toggleLocalBlocking.isEnabled = false
+        }else{
+            fragBinding.toggleLocalBlocking.isEnabled = true
+        }
         fragBinding.togglePersonalBlocking.isEnabled = true
         fragBinding.toggleTheme.isEnabled = true
         fragBinding.toggleUnknownBlocking.isEnabled = true
@@ -107,8 +111,11 @@ class Settings : Fragment() {
             update()
             }
         }
+        //Database block
         fragBinding.toggleDbBlocking.setOnCheckedChangeListener{_,isChecked ->
             if(isChecked){
+                //If database blocking is on, dont use local blocking
+                fragBinding.toggleLocalBlocking.isChecked = false
                 update()
             }else{
                 update()
@@ -116,6 +123,8 @@ class Settings : Fragment() {
         }
         fragBinding.toggleLocalBlocking.setOnCheckedChangeListener{_,isChecked ->
             if(isChecked){
+                //If local block is on, dont use database blocking.
+                fragBinding.toggleDbBlocking.isChecked = false
                 update()
             }else{
                 update()
@@ -159,6 +168,11 @@ class Settings : Fragment() {
                 settingsViewModel.fetchBlocklist {
                     localStorage.serialize(it)
                     fragBinding.loading.visibility = View.INVISIBLE
+                    fragBinding.toggleLocalBlocking.isEnabled = true
+                    fragBinding.toggleDbBlocking.isChecked = false
+                    fragBinding.downlaodButton.isEnabled = false
+                    fragBinding.downlaodButton.setText("Updated")
+                    fragBinding.downlaodButton.setTextColor(Color.GREEN)
                 }
             }
         }else{
