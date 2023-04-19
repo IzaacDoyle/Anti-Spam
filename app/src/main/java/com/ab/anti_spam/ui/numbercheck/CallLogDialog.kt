@@ -9,9 +9,11 @@ import android.provider.CallLog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ab.anti_spam.R
 import com.ab.anti_spam.adapters.ReportChooseNumberAdapter
 import com.ab.anti_spam.adapters.chooseNumberListener
 import com.ab.anti_spam.databinding.FragmentCallLogDialogBinding
@@ -42,7 +44,7 @@ class CallLogDialog : DialogFragment(), chooseNumberListener {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         renderRecyclerView(getRecentCalls())
-
+        darkTheme()
         return root
     }
 
@@ -94,5 +96,12 @@ class CallLogDialog : DialogFragment(), chooseNumberListener {
         this.dismiss()
     }
 
-
+    fun darkTheme(){
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background_dark)
+            fragBinding.header.setTextColor(Color.WHITE)
+        }else{
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background)
+        }
+    }
 }

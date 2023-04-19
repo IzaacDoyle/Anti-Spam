@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
@@ -65,7 +66,7 @@ class CheckNumber : Fragment() {
         viewCommunityReport()
         openCalllog()
         dialogCallback()
-
+        darkTheme()
         return root
     }
 
@@ -157,6 +158,19 @@ fun setRiskColor(risk: String){
         fragBinding.riskText.setTextColor(colorHigh)
     }
 }
+
+    @SuppressLint("ResourceAsColor")
+    fun darkTheme(){
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            fragBinding.mainback.setBackgroundColor(R.color.gray)
+            fragBinding.topbackground.setBackgroundColor(R.color.purple_200)
+            fragBinding.countryHeader.setTextColor(R.color.blueish2)
+            fragBinding.riskHeader.setTextColor(R.color.blueish2)
+            fragBinding.critiquesHeader.setTextColor(R.color.blueish2)
+        }else{
+
+        }
+    }
 
     fun getCountryAbbreviation(country: String): String {
         return when(country) {
