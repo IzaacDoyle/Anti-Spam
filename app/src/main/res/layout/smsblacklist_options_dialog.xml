@@ -19,7 +19,7 @@
         android:paddingTop="2dp"
         android:text="SMS Warning Overlay"
         android:textColor="@color/black"
-        android:textSize="19sp"
+        android:textSize="19dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,8 +37,8 @@
 
     <ImageView
         android:id="@+id/question_mark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="17dp"
         android:layout_marginBottom="20dp"

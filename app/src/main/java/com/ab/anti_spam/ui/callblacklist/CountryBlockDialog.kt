@@ -57,6 +57,7 @@ class CountryBlockDialog: DialogFragment() {
             val model = CallBlacklistModel()
             model.by_country = data
             blacklistViewModel.addBlacklist(model, app)
+            blacklistViewModel.changeTab(0)
             dismiss()
             fragBinding.BlockByCountry.isEnabled = false
         }

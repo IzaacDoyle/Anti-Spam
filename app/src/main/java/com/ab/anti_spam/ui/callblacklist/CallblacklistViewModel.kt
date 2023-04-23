@@ -14,7 +14,11 @@ import com.ab.anti_spam.models.CallBlacklistModel
 
 class CallblacklistViewModel() : ViewModel()  {
 
-    //var localStorage =  CallBlacklistStorage(app.applicationContext)
+    private val selectedTabIndex = MutableLiveData<Int>()
+
+    val observableSelectedTabIndex: LiveData<Int>
+        get() = selectedTabIndex
+
     private val blacklist = MutableLiveData<MutableList<CallBlacklistModel>>()
 
     val observableBlacklist: LiveData<MutableList<CallBlacklistModel>>
@@ -25,6 +29,9 @@ class CallblacklistViewModel() : ViewModel()  {
     val observableStatus: LiveData<Boolean>
         get() = status
 
+    fun changeTab(index: Int){
+        selectedTabIndex.value = index
+    }
 
     fun refresh(app: Main){
         var localStorage =  CallBlacklistStorage(app.applicationContext)

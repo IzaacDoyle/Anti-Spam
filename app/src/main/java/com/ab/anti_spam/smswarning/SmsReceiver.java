@@ -45,10 +45,14 @@ public class SmsReceiver extends BroadcastReceiver {
                         //Sorting model & seperating keywords and regex into different arrays.
                         for (int i = 0; i < model.size(); i++) {
                             if (model.get(i).getBy_keyword().equals(model.get(i).getBy_keyword())) {
-                                keywords.add(model.get(i).getBy_keyword().trim().toLowerCase());
+                                if(!model.get(i).getBy_keyword().isEmpty()) {
+                                    keywords.add(model.get(i).getBy_keyword().trim().toLowerCase());
+                                }
                             }
                             if (model.get(i).getBy_regex().equals(model.get(i).getBy_regex())) {
-                                regexes.add(model.get(i).getBy_regex().trim());
+                                if(!model.get(i).getBy_regex().isEmpty()) {
+                                    regexes.add(model.get(i).getBy_regex().trim());
+                                }
                             }
                         }
 
@@ -73,47 +77,53 @@ public class SmsReceiver extends BroadcastReceiver {
 
                                     //Chopping received SMS message for analysis.
                                     String[] choppedMessage = message.getMessageBody().split(" ");
+                                    outerloop:
                                     for (int i = 0; i < choppedMessage.length; i++) {
                                         String comparison = choppedMessage[i].toLowerCase();
 
                                         //Keywords
                                         for (int ii = 0; ii < keywords.size(); ii++) {
-                                            if (comparison.trim().contains(keywords.get(ii).trim())) {
-                                                //Trigger warning
-                                                Intent overlayintent = new Intent(context, overlayservice.class);
-                                                overlayintent.putExtra("msg_from", message.getDisplayOriginatingAddress());
-                                                context.startService(new Intent(overlayintent));
-                                                break;
-                                            }
+                                               if (comparison.trim().contains(keywords.get(ii).trim())) {
+
+                                                   //Trigger warning
+                                                   Intent overlayintent = new Intent(context, overlayservice.class);
+                                                   overlayintent.putExtra("msg_from", message.getDisplayOriginatingAddress());
+                                                   context.startService(new Intent(overlayintent));
+
+
+                                                   break outerloop;
+                                               }
                                         }
                                         //Regexes
                                         for (int iii = 0; iii < regexes.size(); iii++) {
                                             String rex = regexes.get(iii).toString().toLowerCase();
-                                            if(rex.contains("Starts With")){
-                                                String rex2 = rex.replace("Word Starts With : ","").trim();
+
+                                            if(rex.contains("starts with")){
+                                                String rex2 = rex.replace("word starts with : ","").trim();
+
                                                 if(comparison.startsWith(rex2)){
                                                     Intent overlayintent = new Intent(context, overlayservice.class);
                                                     overlayintent.putExtra("msg_from", message.getOriginatingAddress());
                                                     context.startService(new Intent(overlayintent));
-                                                    break;
+                                                    break outerloop;
                                                 }
                                             }
-                                            if(rex.contains("Ends With")){
-                                                String rex2 = rex.replace("Word Ends With : ","").trim();
+                                            if(rex.contains("ends with")){
+                                                String rex2 = rex.replace("word ends with : ","").trim();
                                                 if(comparison.endsWith(rex2)){
                                                     Intent overlayintent = new Intent(context, overlayservice.class);
                                                     overlayintent.putExtra("msg_from", message.getOriginatingAddress());
                                                     context.startService(new Intent(overlayintent));
-                                                    break;
+                                                    break outerloop;
                                                 }
                                             }
-                                            if(rex.contains("Contains")){
-                                                String rex2 = rex.replace("Word Contains With : ","").trim();
+                                            if(rex.contains("contains")){
+                                                String rex2 = rex.replace("word contains with : ","").trim();
                                                 if(comparison.contains(rex2)){
                                                     Intent overlayintent = new Intent(context, overlayservice.class);
                                                     overlayintent.putExtra("msg_from", message.getOriginatingAddress());
                                                     context.startService(new Intent(overlayintent));
-                                                    break;
+                                                    break outerloop;
                                                 }
                                             }
                                         }

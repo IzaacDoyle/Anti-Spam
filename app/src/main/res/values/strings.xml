@@ -121,6 +121,7 @@
     <string name="submit">Submit</string>
     <string name="select_regex">Select Regex</string>
     <string name="blocks_incoming_numbers_that_are_not_visible_or_unknown">Blocks incoming numbers that are not visible or unknown.</string>
+    <string name="block_number">Block Number</string>
     <string-array name="warning">
         <item>High</item>
         <item>Medium</item>

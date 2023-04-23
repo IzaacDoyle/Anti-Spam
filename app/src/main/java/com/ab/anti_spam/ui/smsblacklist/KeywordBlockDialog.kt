@@ -21,7 +21,7 @@ class KeywordBlockDialog: DialogFragment() {
 
     private var _fragBinding: SmsblacklistKeywordblockDialogBinding? = null
     private val fragBinding get() = _fragBinding!!
-    private val blacklistViewModel: SmsblacklistViewModel by activityViewModels()
+    private val smsblacklistViewModel: SmsblacklistViewModel by activityViewModels()
     lateinit var app: Main
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +51,8 @@ class KeywordBlockDialog: DialogFragment() {
             val data = fragBinding.textInputLayout.editText?.text.toString()
             val model = SMSBlacklistModel()
             model.by_keyword = data
-            blacklistViewModel.addBlacklist(model, app)
+            smsblacklistViewModel.addBlacklist(model, app)
+            smsblacklistViewModel.changeTab(0)
             dismiss()
             fragBinding.WarnByKeyword.isEnabled = false
         }

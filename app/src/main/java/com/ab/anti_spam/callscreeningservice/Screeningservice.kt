@@ -49,15 +49,16 @@ class Screeningservice: CallScreeningService() {
 
 
                 //Community Blocking (Realtime Database) callback
-                FirebaseDBManager.getCommunityReportByNumber(phoneNumber, {
-                    if (it != null) {
-                        if (it.user_comments.size >= settings.community_block_num) {
-                            blockNumber(response, phoneNumber, callDetails)
+                if(settings.community_block_num > 0) {
+                    FirebaseDBManager.getCommunityReportByNumber(phoneNumber, {
+                        if (it != null) {
+                            if (it.user_comments.size >= settings.community_block_num) {
+                                blockNumber(response, phoneNumber, callDetails)
+                            }
+
                         }
-
-                    }
-                })
-
+                    })
+                }
                 //Database Blocking (FireStore) callback
                 if (settings.database_block == true) {
                     FirebaseDBManager.checkNumber(phoneNumber, {

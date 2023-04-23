@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import com.ab.anti_spam.R
 import com.ab.anti_spam.databinding.CallblacklistNumberblockDialogBinding
 import com.ab.anti_spam.main.Main
 import com.ab.anti_spam.models.CallBlacklistModel
+import com.ab.anti_spam.ui.numbercheck.CallLogDialog
 
 class NumberBlockDialog: DialogFragment() {
 
@@ -30,7 +32,7 @@ class NumberBlockDialog: DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _fragBinding = CallblacklistNumberblockDialogBinding.inflate(inflater, container, false)
         val root = fragBinding.root
@@ -40,17 +42,32 @@ class NumberBlockDialog: DialogFragment() {
             addBlock()
         }
         darkTheme()
+        dialogCallback()
+        openCalllog()
         return root
     }
 
-    private fun addBlock(){
+    fun addBlock(){
         if(!fragBinding.textInputLayout.editText?.text.toString().isEmpty()) {
             val data = fragBinding.textInputLayout.editText?.text.toString()
             val model = CallBlacklistModel()
             model.by_number = data
             blacklistViewModel.addBlacklist(model, app)
+            blacklistViewModel.changeTab(1)
             dismiss()
             fragBinding.BlockByNumber.isEnabled = false
+        }
+    }
+    fun openCalllog(){
+        fragBinding.callog.setOnClickListener{
+            val calldialog = CallLogDialog()
+            calldialog.show(parentFragmentManager,null)
+        }
+    }
+    fun dialogCallback(){
+        setFragmentResultListener("number") { _, bundleData ->
+            val callLogNumber: String? = bundleData.getString("number")
+            fragBinding.numberText.setText(callLogNumber)
         }
     }
 

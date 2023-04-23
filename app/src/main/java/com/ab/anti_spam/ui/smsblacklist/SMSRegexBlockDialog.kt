@@ -19,7 +19,7 @@ class SMSRegexBlockDialog: DialogFragment() {
 
     private var _fragBinding: SmsblacklistRegexblockDialogBinding? = null
     private val fragBinding get() = _fragBinding!!
-    private val blacklistViewModel: SmsblacklistViewModel by activityViewModels()
+    private val smsblacklistViewModel: SmsblacklistViewModel by activityViewModels()
     lateinit var app: Main
 
 
@@ -54,7 +54,8 @@ class SMSRegexBlockDialog: DialogFragment() {
             if (regex.isNotEmpty() || word.isNotEmpty()) {
                 val model = SMSBlacklistModel()
                 model.by_regex = data
-                blacklistViewModel.addBlacklist(model, app)
+                smsblacklistViewModel.addBlacklist(model, app)
+                smsblacklistViewModel.changeTab(1)
                 dismiss()
                 fragBinding.WarnByRegex.isEnabled = false
             }

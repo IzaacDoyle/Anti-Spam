@@ -46,12 +46,19 @@ class Smsblacklist : Fragment() {
             optionsDialog.show(parentFragmentManager,null)
         }
         tabLayoutSetup()
-
+        tabObserver()
         return root
     }
+    private fun selectTab(position: Int) {
+        val tab = tabLayout.getTabAt(position)
+        tabLayout.selectTab(tab)
+    }
 
-
-
+    private fun tabObserver(){
+        blacklistViewModel.observableSelectedTabIndex.observe(viewLifecycleOwner,{
+            selectTab(it)
+        })
+    }
 
     private fun tabLayoutSetup(){
         tabLayout.removeAllTabs()

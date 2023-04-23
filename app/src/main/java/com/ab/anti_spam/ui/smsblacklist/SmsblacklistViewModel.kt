@@ -9,7 +9,12 @@ import com.ab.anti_spam.models.SMSBlacklistModel
 
 class SmsblacklistViewModel() : ViewModel()  {
 
-    //var localStorage =  CallBlacklistStorage(app.applicationContext)
+
+    private val selectedTabIndex = MutableLiveData<Int>()
+
+    val observableSelectedTabIndex: LiveData<Int>
+        get() = selectedTabIndex
+
     private val blacklist = MutableLiveData<MutableList<SMSBlacklistModel>>()
 
     val observableBlacklist: LiveData<MutableList<SMSBlacklistModel>>
@@ -20,6 +25,10 @@ class SmsblacklistViewModel() : ViewModel()  {
     val observableStatus: LiveData<Boolean>
         get() = status
 
+
+    fun changeTab(index: Int){
+        selectedTabIndex.value = index
+    }
 
     fun refresh(app: Main){
         var localStorage =  SMSBlacklistStorage(app.applicationContext)

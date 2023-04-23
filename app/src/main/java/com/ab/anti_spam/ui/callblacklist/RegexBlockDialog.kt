@@ -58,6 +58,7 @@ class RegexBlockDialog: DialogFragment() {
                 val model = CallBlacklistModel()
                 model.by_regex = data
                 blacklistViewModel.addBlacklist(model, app)
+                blacklistViewModel.changeTab(2)
                 dismiss()
                 fragBinding.BlockByRegex.isEnabled = false
             }

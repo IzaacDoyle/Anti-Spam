@@ -7,6 +7,7 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -44,13 +45,14 @@ class Callblacklist : Fragment(),deleteListener {
         fragBinding.fab.setOnClickListener{
             val optionsDialog = OptionsDialog()
             optionsDialog.show(parentFragmentManager,null)
+
         }
 
         setupMenu()
         tabLayoutSetup()
+        tabObserver()
         return root
     }
-
 
 
     private fun tabLayoutSetup(){
@@ -73,7 +75,15 @@ class Callblacklist : Fragment(),deleteListener {
         })
     }
 
-
+    private fun selectTab(position: Int) {
+        val tab = tabLayout.getTabAt(position)
+        tabLayout.selectTab(tab)
+    }
+    private fun tabObserver(){
+        blacklistViewModel.observableSelectedTabIndex.observe(viewLifecycleOwner,{
+          selectTab(it)
+        })
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
